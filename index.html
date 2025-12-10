@@ -5,133 +5,319 @@
   <title>오늘의 운세</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* ===== 기본 스타일 (모바일 우선, 점집 느낌) ===== */
+    /* ===== 전체 공통 스타일 (모바일 우선) ===== */
+    :root {
+      --neon-lime: #c7ff2e;
+      --black: #111111;
+      --text-main: #222222;
+      --text-sub: #555555;
+      --card-bg: #ffffff;
+      --badge-bg: #f4f4f4;
+      --accent: #00bf6f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      background: radial-gradient(circle at top, #4b2768, #140814 55%, #050308 100%);
-      color: #f7f0ff;
+      background: var(--neon-lime);
+      color: var(--text-main);
     }
-    .container {
+
+    .wrap {
       max-width: 480px;
       margin: 0 auto;
-      padding: 24px 20px 40px;
+      min-height: 100vh;
+      padding: 16px 16px 96px;
+      position: relative;
     }
-    h1 {
-      font-size: 1.9rem;
-      margin-bottom: 0.4rem;
-      text-align: center;
-      letter-spacing: 0.1em;
+
+    /* ===== 헤더/브랜드 영역 ===== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
-    .subtitle {
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lang {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .menu-lines {
+      width: 18px;
+      height: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-lines span {
+      display: block;
+      height: 2px;
+      border-radius: 999px;
+      background: #000;
+    }
+
+    /* ===== 히어로 영역 ===== */
+    .hero {
       text-align: center;
-      font-size: 0.9rem;
-      color: #d2b7ff;
+      margin-top: 8px;
       margin-bottom: 24px;
     }
-    .card {
-      background: rgba(10, 4, 24, 0.9);
-      border-radius: 16px;
-      padding: 16px 16px 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      border: 1px solid rgba(206, 147, 255, 0.25);
+    .hero-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.4;
       margin-bottom: 16px;
     }
+    .hero-title span {
+      font-weight: 800;
+    }
+    .clover {
+      font-size: 80px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .hero-sub {
+      font-size: 0.9rem;
+      color: #333333;
+    }
+
+    /* ===== 입력 카드 ===== */
+    .card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 18px 16px 16px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       margin-bottom: 4px;
-      color: #e0ccff;
+      color: #666666;
     }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
     input, select {
       width: 100%;
       padding: 10px 12px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: 1px solid #3f2a63;
-      background: rgba(11, 6, 24, 0.9);
-      color: #f7f0ff;
-      box-sizing: border-box;
-      font-size: 0.95rem;
+      border-radius: 12px;
+      border: 1px solid #dddddd;
+      font-size: 0.9rem;
+      outline: none;
+      background: #fafafa;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      background: #ffffff;
     }
     input::placeholder {
-      color: #8f7fb5;
+      color: #aaaaaa;
     }
-    button {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, #ffb347, #ff5c9a);
-      color: #140918;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .error {
+      font-size: 0.8rem;
+      color: #e53935;
+      min-height: 1.2em;
       margin-top: 4px;
     }
-    button:active {
+
+    /* ===== 결과 카드 ===== */
+    .result {
+      margin-top: 8px;
+      display: none;
+    }
+
+    .result-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 18px 16px 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+      margin-bottom: 16px;
+    }
+
+    .date-text {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .result-headline {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .result-intro {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .badge {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: var(--badge-bg);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .badge-title {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text-sub);
+    }
+    .badge-value {
+      font-weight: 700;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+    }
+    .section-body {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    .disclaimer {
+      font-size: 0.75rem;
+      color: #444444;
+      text-align: center;
+      margin-top: 8px;
+      opacity: 0.8;
+    }
+
+    /* ===== 하단 고정 버튼 ===== */
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 16px 18px;
+      background: linear-gradient(to top, rgba(0,0,0,0.28), transparent);
+      pointer-events: none;
+    }
+    .bottom-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      pointer-events: auto;
+    }
+    .main-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 16px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .main-btn:active {
       transform: translateY(1px);
       opacity: 0.9;
     }
 
-    .result-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #ffe082;
-    }
-    .meta {
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      color: #c5b2ff;
-    }
-    .lines {
-      font-size: 0.9rem;
-      line-height: 1.5;
-      white-space: pre-line;
-    }
-    .badge-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .error {
-      font-size: 0.85rem;
-      color: #ff8a80;
-      margin-top: 4px;
-      min-height: 1em;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.75rem;
-      color: #8067b8;
-      margin-top: 12px;
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>오늘의 운세</h1>
-    <div class="subtitle">이름과 사주 정보를 입력하고 오늘의 흐름을 확인해 볼 것.</div>
+  <div class="wrap">
+    <!-- 헤더 -->
+    <header class="top-bar">
+      <div class="brand">NoPlasticSunday</div>
+      <div class="top-right">
+        <div class="lang">🌐 <span>KR</span></div>
+        <div class="menu-lines">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 히어로 / 인사 -->
+    <section class="hero">
+      <div class="hero-title">
+        <span id="heroNamePrefix"></span>오늘도 행운이 가득하길!
+      </div>
+      <div class="clover">🍀</div>
+      <div class="hero-sub">간단한 정보를 입력하면 오늘 하루의 운세와 작은 조언을 알려줍니다.</div>
+    </section>
 
     <!-- 입력 카드 -->
-    <div class="card">
-      <div>
+    <section class="card">
+      <div class="card-title">정확한 운세를 위해<br><span id="formNamePrefix">당신</span>을 더 알고 싶어요</div>
+      <div class="card-desc">
+        성별, 생년월일, 태어난 시간을 기반으로 오늘의 흐름을 간단히 분석합니다.
+        입력한 정보는 운세 계산 용도로만 사용됩니다.
+      </div>
+
+      <div class="field">
         <label for="name">이름</label>
-        <input type="text" id="name" placeholder="예: 홍길동" />
+        <input type="text" id="name" placeholder="예: 호찌" />
+      </div>
 
-        <label for="birth">생년월일</label>
-        <input type="date" id="birth" />
-
+      <div class="field">
         <label for="gender">성별</label>
         <select id="gender">
           <option value="">선택하세요</option>
@@ -139,7 +325,14 @@
           <option value="female">여성</option>
           <option value="other">기타</option>
         </select>
+      </div>
 
+      <div class="field">
+        <label for="birth">생년월일</label>
+        <input type="date" id="birth" />
+      </div>
+
+      <div class="field">
         <label for="birthTime">태어난 시간</label>
         <select id="birthTime">
           <option value="">모름 / 기억 안 남</option>
@@ -168,228 +361,268 @@
           <option value="22">22시</option>
           <option value="23">23시</option>
         </select>
-
-        <div id="error" class="error"></div>
-        <button id="btn">오늘의 운세 보기</button>
       </div>
-    </div>
 
-    <!-- 결과 카드 -->
-    <div class="card" id="resultCard" style="display:none;">
-      <div class="result-title" id="resultTitle"></div>
-      <div class="meta" id="resultMeta"></div>
-      <div class="badge-row">
-        <div class="badge" id="scoreBadge"></div>
-        <div class="badge" id="colorBadge"></div>
-        <div class="badge" id="luckyBadge"></div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="noTime" />
+        <label for="noTime">태어난 시간을 잘 모르겠어요</label>
       </div>
-      <div class="lines" id="resultLines"></div>
-    </div>
 
-    <footer>
-      본 페이지는 단순 엔터테인먼트용 운세 서비스임.
-    </footer>
+      <div id="error" class="error"></div>
+    </section>
+
+    <!-- 결과 영역 -->
+    <section class="result" id="resultSection">
+      <div class="result-card">
+        <div class="date-text" id="todayText"></div>
+        <div class="result-headline" id="resultTitle"></div>
+        <div class="result-intro" id="resultIntro"></div>
+
+        <div class="badge-row">
+          <div class="badge">
+            <span class="badge-title">오늘의 점수</span>
+            <span class="badge-value" id="scoreBadge"></span>
+          </div>
+          <div class="badge">
+            <span class="badge-title">행운의 숫자</span>
+            <span class="badge-value" id="luckyBadge"></span>
+          </div>
+          <div class="badge">
+            <span class="badge-title">추천 색상</span>
+            <span class="badge-value" id="colorBadge"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 세부 조언 블록 -->
+      <div id="sectionContainer"></div>
+
+      <div class="disclaimer">
+        본 운세는 오락 및 자기 성찰을 위한 참고용이며,
+        실제 투자·의사결정의 근거로 사용하지 않기를 권장함.
+      </div>
+    </section>
+  </div>
+
+  <!-- 하단 고정 버튼 -->
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <button class="main-btn" id="seeFortuneBtn">오늘의 운세 보기</button>
+    </div>
   </div>
 
   <script>
-    // ===== 1. 운세 데이터 정의 (한 줄 운세 + 15줄 해석) =====
+    // ===== 날짜 표기 =====
+    function formatTodayKorean() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const date = now.getDate();
+      const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+      const day = weekdays[now.getDay()];
+      return year + "년 " + month + "월 " + date + "일 " + day + "요일";
+    }
+
+    // ===== 운세 데이터 (한 줄 요약 + 3~4개 섹션) =====
     const fortunes = [
       {
-        title: "새로운 기회가 열리는 하루임.",
-        lines: [
-          "1. 오늘은 평소에 망설이던 일을 작게라도 시작하면 좋은 흐름을 타기 쉬운 날임.",
-          "2. 업무나 학업에서 사소한 제안이라도 먼저 꺼내볼 것. 의외로 진지하게 받아들여질 수 있음.",
-          "3. 사람을 만나는 자리에서 예상 밖의 인연이 연결될 수 있으니, 초대가 오면 가능한 한 응해볼 것.",
-          "4. 오늘 느끼는 작은 호기심을 그냥 넘기지 말고 검색하거나 메모해두면 향후 기회로 이어질 수 있음.",
-          "5. 재정적으로는 큰 변화는 없지만, 소액 투자나 자기계발을 위한 지출은 긍정적으로 작용함.",
-          "6. 연애나 대인관계에서 솔직한 표현이 유리하게 작용하는 날임. 단, 감정보다 사실 위주로 전달할 것.",
-          "7. 몸 상태가 평소보다 가볍게 느껴질 수 있으니, 가벼운 스트레칭이나 산책을 더해보면 좋음.",
-          "8. 오늘 떠오르는 아이디어는 완성도가 낮더라도 반드시 기록해 둘 것. 나중에 보완할 여지가 큼.",
-          "9. 지나치게 완벽을 추구하기보다는, 70% 완성이라도 일단 실행해보는 용기가 필요한 하루임.",
-          "10. 주변에서 들어오는 피드백 중 반복되는 키워드는 메모해 두면 앞으로의 방향에 도움이 됨.",
-          "11. 짧은 이동 시간에도 휴대폰만 보지 말고 주변 풍경을 한 번 더 살펴보면 생각이 정리됨.",
-          "12. 오늘 만나는 사람들 중 한 명은 가까운 미래에 일 또는 프로젝트로 다시 연결될 가능성이 있음.",
-          "13. 감정 기복이 심하지 않은 편이므로, 중요한 일정이나 회의를 오늘로 잡는 것도 나쁘지 않음.",
-          "14. 다만 너무 많은 일을 한 번에 잡기보다는, 가장 중요한 일 1~2개에 에너지를 집중하는 편이 좋음.",
-          "15. 오늘 하루의 키워드는 ‘시작’과 ‘메모’임. 작게라도 시작하고, 떠오르는 생각은 반드시 기록할 것."
+        headline: "이런 날은 편안한 마음이 최고예요!",
+        intro:
+          "예민해질 수 있으니 평소에 한 번에 처리하려 했던 일들을 오늘만큼은 조금 느긋하게 바라보는 편이 좋습니다. 몸과 마음의 속도를 맞춰 주면 오히려 중요한 포인트가 더 또렷하게 보일 수 있는 날입니다.",
+        sections: [
+          {
+            title: "호찌님의 오늘의 행운",
+            body:
+              "작은 실수나 계획 변경이 생기더라도 지나치게 자책하지 않아도 됩니다. 예상과 달라 보이는 흐름 속에서 오히려 숨겨진 기회가 나타날 수 있습니다. 오늘은 ‘흐름에 몸을 맡긴다’는 마음가짐이 행운을 부르는 키워드입니다."
+          },
+          {
+            title: "컨디션 & 감정 관리",
+            body:
+              "휴식이 방해받았거나 스트레스가 쌓였다면 가벼운 산책이나 짧은 쉼이 큰 도움이 됩니다. 집중이 잘 안 될 때는 억지로 버티기보다 5분 정도 자리를 비우거나 물을 마시며 리셋해 보는 것이 좋습니다."
+          },
+          {
+            title: "관계에서 조심할 점",
+            body:
+              "오늘은 사소한 말에도 예민해질 수 있는 날입니다. 상대의 의도보다 말의 표면만 보고 반응하기 쉬우니, 마음이 불편해질 때는 바로 답장을 보내기보다 한 번 숨을 고른 뒤 대화하는 편이 좋습니다."
+          },
+          {
+            title: "오늘의 한 줄 가이드",
+            body:
+              "오늘의 키워드는 ‘기대치 낮추기’입니다. 완벽을 목표로 하기보다, 지금 할 수 있는 만큼만 성실하게 해낸다면 예상보다 훨씬 안정적인 하루가 될 수 있습니다."
+          }
         ]
       },
       {
-        title: "속도를 늦추고 숨을 고를 필요가 있는 하루임.",
-        lines: [
-          "1. 오늘은 밀어붙이기보다는 지금까지의 흐름을 점검하고 정리하는 데 더 어울리는 날임.",
-          "2. 해야 할 일 목록이 많다면 우선순위를 다시 세우고 미룰 수 있는 일은 과감하게 미루는 편이 좋음.",
-          "3. 감정적으로 예민해질 수 있으니 사소한 말 한마디에 크게 반응하지 않도록 의식적으로 거리를 둘 것.",
-          "4. 중요한 계약이나 결정은 가능하다면 하루 정도 더 고민해보고 진행하는 편이 안전함.",
-          "5. 금전적인 부분에서는 관성대로 지출하기 쉬운 날이므로 자동결제 항목을 한 번 점검해 보는 것도 좋음.",
-          "6. 연애나 대인관계에서는 상대의 말보다 표정과 행동을 보는 것이 더 정확한 힌트를 줄 수 있음.",
-          "7. 업무 속도가 떨어진다고 자책하기보다는, 지금은 체력을 비축하는 구간이라고 생각하는 것이 좋음.",
-          "8. 커피나 자극적인 음식 섭취를 줄이고 물을 평소보다 조금 더 많이 마셔주면 컨디션 회복에 도움이 됨.",
-          "9. 잠깐의 낮잠이나 짧은 휴식만으로도 집중력이 눈에 띄게 회복될 수 있는 날임.",
-          "10. 정리 정돈을 통해 머릿속이 함께 정리되는 효과를 기대할 수 있으니, 책상이나 방을 간단히 정리해볼 것.",
-          "11. 해결이 안 되던 문제는 오늘 억지로 붙잡기보다는 전혀 다른 일에 집중했다가 나중에 다시 보는 것이 좋음.",
-          "12. 주변 사람들의 기대를 모두 맞추려 하기보다는, 오늘 하루만큼은 나에게 필요한 기준을 우선으로 둘 것.",
-          "13. SNS나 메신저 알림을 잠시 줄이는 것만으로도 마음이 한결 가벼워질 수 있음.",
-          "14. 오늘의 키워드는 ‘정리’와 ‘휴식’임. 과감하게 쉬어가는 선택이 오히려 장기적인 효율을 높여줌.",
-          "15. 자기 전에 오늘 있었던 일 중 감사한 점을 3가지 정도 떠올려 보면 내일의 마음가짐이 훨씬 가벼워질 것."
+        headline: "새로운 기회가 조용히 다가오는 날입니다.",
+        intro:
+          "평소에 눈여겨보던 일이나 사람에게 가볍게 손을 내밀어 보기 좋은 날입니다. 큰 결심이라기보다 ‘테스트해 본다’는 느낌으로 움직이면 부담 없이 좋은 흐름을 탈 수 있습니다.",
+        sections: [
+          {
+            title: "일·학업 운",
+            body:
+              "업무나 과제에서 작은 제안이나 아이디어가 예상 밖의 주목을 받을 수 있습니다. 완성도가 100%가 아니어도 괜찮으니, 초안이라도 먼저 보여주는 용기가 필요합니다."
+          },
+          {
+            title: "금전 & 기회",
+            body:
+              "당장 큰 돈이 들어오진 않더라도, 앞으로의 수입 구조를 바꾸게 될 힌트를 얻을 수 있습니다. 사람들의 요청이나 질문 속에서 ‘내가 돈을 벌 수 있는 지점’을 한 번 더 떠올려 보세요."
+          },
+          {
+            title: "관계 & 인연",
+            body:
+              "오랜만에 떠오른 사람이 있다면 가볍게 안부 인사를 보내 보세요. 생각보다 자연스럽게 대화가 이어지고, 앞으로 함께할 프로젝트나 취미 인연으로 발전할 가능성도 있습니다."
+          },
+          {
+            title: "오늘의 한 줄 가이드",
+            body:
+              "완벽한 준비가 되기를 기다리기보다, ‘지금 할 수 있는 만큼’ 시작해 보는 사람이 결국 기회를 잡게 됩니다."
+          }
         ]
       },
       {
-        title: "사람 운이 강하게 들어오는 하루임.",
-        lines: [
-          "1. 오늘은 사람과의 만남에서 중요한 단서와 기회가 들어오는 날임. 가능하면 약속을 피하지 말 것.",
-          "2. 오랜만에 떠오르는 사람이 있다면 가볍게 안부 인사를 보내보는 것도 좋음.",
-          "3. 대화 중에 나오는 농담이나 가벼운 아이디어가 실제 프로젝트로 이어질 가능성이 있음.",
-          "4. 연애 운도 나쁘지 않으니, 관심 있는 사람이 있다면 지나가는 말처럼이라도 대화를 시도해볼 것.",
-          "5. 이미 연인이 있다면, 짧은 메시지 한 줄이나 작은 선물만으로도 관계가 한층 부드러워질 수 있음.",
-          "6. 오늘 들어오는 부탁 중 일부는 나중에 도움으로 돌아올 가능성이 크므로, 무리가 되지 않는 선에서 응하는 것이 좋음.",
-          "7. 다만 모든 사람에게 잘 보이려 하기보다는, 나와 결이 맞는 사람에게 에너지를 집중하는 편이 좋음.",
-          "8. 가족이나 가까운 지인과의 대화에서 숨겨져 있던 속마음이 드러날 수 있으니, 상대의 이야기를 끝까지 들어줄 것.",
-          "9. 업무적으로는 협업 제안이나 파트너십 관련 이야기를 꺼내기에 좋은 흐름임.",
-          "10. 새로운 모임이나 커뮤니티에 가입해 보는 것도 장기적으로 도움이 될 수 있음.",
-          "11. 오늘 만나는 누군가는 나의 장점을 알아보고 인정해 줄 수 있는 사람일 가능성이 큼.",
-          "12. 작은 갈등이 생기더라도 즉각 반응하기보다는 시간을 두고 다시 이야기하는 편이 좋음.",
-          "13. 대화 중 불편한 포인트를 잘 관찰하면 앞으로 누구와 엮어야 할지에 대한 기준이 더 명확해짐.",
-          "14. 오늘의 관계 운은 ‘선택과 집중’이 핵심임. 모두에게 잘하려 하기보다, 소중한 몇 명에게 더 진심을 쓰는 날로 만들 것.",
-          "15. 하루가 끝난 뒤, 오늘 나를 웃게 만든 사람과 불편하게 만든 사람을 각각 떠올려보면 인간관계 정리에 큰 힌트가 됨."
-        ]
-      },
-      {
-        title: "금전 흐름을 점검하기 좋은 하루임.",
-        lines: [
-          "1. 오늘은 갑작스러운 큰 돈이 들어오기보다는, 새는 돈을 막아 재정을 안정시키기 좋은 날임.",
-          "2. 구독 서비스나 자동결제 항목을 한 번 점검해 보면 불필요한 지출을 발견할 수 있음.",
-          "3. 충동구매를 하기 쉬운 날이므로, 사고 싶은 물건이 있다면 하루만 더 고민해 볼 것.",
-          "4. 다만 자기계발, 건강, 장비 업그레이드처럼 장기적으로 회수가 가능한 지출은 과도하지만 않다면 의미가 있음.",
-          "5. 지인과의 금전 거래는 오늘은 가급적 피하는 것이 좋음. 부득이하다면 조건을 명확히 기록해 둘 것.",
-          "6. 수입을 늘리는 방법을 고민하기보다, 지출 구조를 가볍게 만드는 쪽에 집중하는 편이 효율적임.",
-          "7. 장기적인 목표를 위해 적금이나 투자 비율을 조금 조정해 보는 것도 좋음.",
-          "8. 오늘 떠오르는 돈 관련 아이디어는 현실성이 있는지 반드시 두 번 이상 점검할 것.",
-          "9. 할부나 대출을 새로 만드는 결정은 가능한 한 미루는 편이 안전함.",
-          "10. 점심이나 커피값 같은 소소한 지출도 쌓이면 큰 금액이 되므로, 오늘만큼은 한 번 더 생각하고 쓰는 연습을 해볼 것.",
-          "11. 나의 노동과 시간이 어느 정도의 가치를 지니는지 다시 계산해 보는 것도 필요함.",
-          "12. 수입보다 지출을 먼저 계획하는 습관을 줄이는 것이 장기적으로 재정 운을 좋게 만드는 포인트임.",
-          "13. 돈 때문에 스트레스를 받고 있다면, 오늘은 숫자 자체보다 구조를 보는 연습을 해볼 것.",
-          "14. 오늘의 금전 키워드는 ‘정리’와 ‘멈춤’임. 새로 벌 생각보다, 새는 부분을 막는 쪽이 더 효과적임.",
-          "15. 잠들기 전에 이번 달에 꼭 써야 할 필수 지출과 줄일 수 있는 지출을 나눠 적어보면 마음이 훨씬 가벼워질 것."
-        ]
-      },
-      {
-        title: "집중력과 실행력이 살아나는 하루임.",
-        lines: [
-          "1. 오늘은 머리가 비교적 맑게 돌아가는 날임. 오래 미뤄둔 일을 처리하기에 적합함.",
-          "2. 우선순위가 높은 일 하나를 골라, 다른 것보다 먼저 처리하는 전략이 효과적임.",
-          "3. 잡생각이 많아질 수 있으나, 할 일 목록을 적어두면 금방 정리가 됨.",
-          "4. 작업에 몰입하기 위해 방해 요소를 최소화할 것. 알림 끄기, 산만한 탭 정리 등이 도움이 됨.",
-          "5. 짧은 시간에 많은 일을 처리하려 하지 말고, 25분 집중 + 5분 휴식을 반복하는 방식이 효율적임.",
-          "6. 새로운 공부를 시작하기에도 좋은 날이니, 짧은 강의나 튜토리얼을 하나 골라보는 것도 좋음.",
-          "7. 피곤함이 느껴질 수 있지만, 적당한 긴장감은 오히려 성과에 도움이 되는 에너지로 작용함.",
-          "8. 주변의 소음이 신경 쓰인다면, 카페나 조용한 공간으로 자리를 옮기는 것도 고려해 볼 것.",
-          "9. 오늘 완성한 결과물은 예상보다 좋은 평가를 받을 가능성이 큼.",
-          "10. 디테일에 집착하기보다는, 큰 틀을 먼저 잡고 부족한 부분을 나중에 채우는 편이 좋음.",
-          "11. 스스로에게 너무 높은 기준을 요구하면 금방 지칠 수 있으니, 적당한 선에서 만족하는 연습도 필요함.",
-          "12. 오늘의 성과를 기록해두면, 나중에 스스로를 다잡을 때 좋은 근거가 됨.",
-          "13. 다른 사람과 비교하기보다는 어제의 나와 비교하는 시각을 유지할 것.",
-          "14. 오늘의 키워드는 ‘집중’과 ‘누적’임. 작은 성과라도 쌓이면 큰 힘이 됨.",
-          "15. 하루를 마무리하며 오늘 해낸 일 3가지를 적어보면 자신감이 자연스럽게 올라감."
-        ]
-      },
-      {
-        title: "마음 정리가 필요한 하루임.",
-        lines: [
-          "1. 오늘은 몸보다 마음이 더 피곤하게 느껴질 수 있는 날임. 감정을 정리하는 데 시간을 쓰는 것이 좋음.",
-          "2. 괜찮다고 넘겼던 일들이 한꺼번에 떠오를 수 있으니, 감정을 억지로 눌러두기보다 글로 풀어보는 것이 도움이 됨.",
-          "3. 혼자 있는 시간이 필요하다면, 죄책감을 느끼지 말고 잠시 거리를 두는 것도 괜찮음.",
-          "4. 주변 사람들의 말이 유난히 예민하게 들릴 수 있으니, 즉각적인 반응보다는 한 템포 쉬어가는 게 좋음.",
-          "5. 스스로를 비난하는 생각이 올라오면, ‘내가 이미 잘하고 있는 것’도 함께 떠올려 볼 것.",
-          "6. 오늘은 큰 결정을 내리기보다, 충분한 정보를 모으고 감정을 가라앉히는 데 집중하는 편이 좋음.",
-          "7. 잠깐의 산책이나 따뜻한 음료 한 잔이 생각보다 큰 위로를 줄 수 있음.",
-          "8. 타인의 시선에서 나를 평가하기보다, 내가 나에게 바라는 기준이 무엇인지 점검해 보는 시간이 필요함.",
-          "9. 불안감이 올라온다면, 구체적인 행동 계획을 작게라도 세워보는 것이 도움이 됨.",
-          "10. 감정이 흔들릴수록 루틴이 중요해짐. 평소 하던 작은 습관을 유지하려고 노력할 것.",
-          "11. 오늘 터져 나오는 감정은 그동안 잘 버텨왔다는 증거이기도 함.",
-          "12. 힘들었던 순간을 떠올리며, 그때도 결국 지나갔다는 사실을 상기해 볼 것.",
-          "13. 모든 관계와 상황을 오늘 하루 안에 정리하려 하지 않아도 됨. 과정 중에 있다는 것을 인정하는 편이 편안함.",
-          "14. 오늘의 키워드는 ‘허용’과 ‘회복’임. 느끼는 그대로를 인정하는 것만으로도 절반은 치유가 시작됨.",
-          "15. 잠들기 전, 오늘 나를 가장 힘들게 한 생각과 가장 위로가 되었던 순간을 각각 적어보면 마음이 한결 가벼워질 것."
+        headline: "집중력과 실행력이 살아나는 하루입니다.",
+        intro:
+          "해야 할 일들의 윤곽이 비교적 또렷하게 보이는 날입니다. 계획만 세우고 미뤄두었던 일을 실제 행동으로 옮기기에 좋은 타이밍입니다.",
+        sections: [
+          {
+            title: "우선순위 정하기",
+            body:
+              "오늘은 모든 일을 한 번에 해결하려 하기보다, 가장 중요한 일 한두 가지에 에너지를 집중하는 편이 좋습니다. 할 일 목록을 적어보고 ‘지금 반드시 해야 하는 것’부터 체크해 보세요."
+          },
+          {
+            title: "몰입 팁",
+            body:
+              "25분 집중 후 5분 쉬는 식으로 짧게 끊어서 일하면 효율이 높아집니다. 휴대폰 알림을 잠시 꺼두거나, 작업에 필요 없는 탭을 정리하는 것만으로도 몰입도가 달라질 수 있습니다."
+          },
+          {
+            title: "대인 관계",
+            body:
+              "오늘은 감정 기복이 심하지 않아 중요한 미팅이나 대화 일정을 잡기에 괜찮은 날입니다. 다만 상대의 속도를 배려하면서 내 의견을 차분히 정리해 전하는 것이 포인트입니다."
+          },
+          {
+            title: "오늘의 한 줄 가이드",
+            body:
+              "완벽보다 ‘완료’를 목표로 삼아보세요. 70% 완성이라도 마무리된 일 하나가 머릿속 부담을 크게 줄여 줍니다."
+          }
         ]
       }
     ];
 
-    const colors = ["보라색", "파란색", "초록색", "빨간색", "노란색", "검정색", "하얀색", "분홍색"];
+    const colors = ["라임 그린", "차분한 베이지", "네온 옐로", "딥 블루", "코랄 핑크", "포레스트 그린"];
 
-    // ===== 2. 입력값 → 숫자 시드로 변환하는 함수 =====
+    // ===== 시드 생성 =====
     function makeSeed(birthStr, gender, birthTime) {
-      // birthStr: "YYYY-MM-DD"
-      const digits = birthStr.replace(/-/g, ""); // "19941103" 형태
+      const digits = birthStr.replace(/-/g, "");
       let sum = 0;
-      for (let ch of digits) {
-        sum += Number(ch);
-      }
+      for (let ch of digits) sum += Number(ch);
 
-      // 성별 가중치
       let genderVal = 0;
       if (gender === "male") genderVal = 3;
       else if (gender === "female") genderVal = 7;
       else if (gender === "other") genderVal = 5;
 
-      // 태어난 시간 (없으면 0)
       const timeVal = birthTime !== "" ? Number(birthTime) : 0;
-
-      // 간단한 시드 계산 (규칙만 일정하면 됨)
-      const seed = sum * 13 + genderVal * 17 + timeVal * 19;
-      return seed;
+      return sum * 13 + genderVal * 17 + timeVal * 19;
     }
 
-    // ===== 3. 버튼 클릭 시 운세 계산 및 화면 표시 =====
-    document.getElementById("btn").addEventListener("click", () => {
-      const name = document.getElementById("name").value.trim();
-      const birth = document.getElementById("birth").value;
-      const gender = document.getElementById("gender").value;
-      const birthTime = document.getElementById("birthTime").value;
-      const errorDiv = document.getElementById("error");
+    // ===== DOM 요소 =====
+    const nameInput = document.getElementById("name");
+    const genderSelect = document.getElementById("gender");
+    const birthInput = document.getElementById("birth");
+    const birthTimeSelect = document.getElementById("birthTime");
+    const noTimeCheck = document.getElementById("noTime");
+    const errorDiv = document.getElementById("error");
+    const heroNamePrefix = document.getElementById("heroNamePrefix");
+    const formNamePrefix = document.getElementById("formNamePrefix");
+    const seeFortuneBtn = document.getElementById("seeFortuneBtn");
+    const resultSection = document.getElementById("resultSection");
+    const todayText = document.getElementById("todayText");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultIntro = document.getElementById("resultIntro");
+    const scoreBadge = document.getElementById("scoreBadge");
+    const luckyBadge = document.getElementById("luckyBadge");
+    const colorBadge = document.getElementById("colorBadge");
+    const sectionContainer = document.getElementById("sectionContainer");
 
-      // 입력값 검증
+    // 이름 입력 시 상단 문구 업데이트
+    function updateNameUI() {
+      const name = nameInput.value.trim();
+      if (name) {
+        heroNamePrefix.textContent = name + "님, ";
+        formNamePrefix.textContent = name + "님";
+      } else {
+        heroNamePrefix.textContent = "";
+        formNamePrefix.textContent = "당신";
+      }
+    }
+    nameInput.addEventListener("input", updateNameUI);
+
+    // 태어난 시간 체크박스 처리
+    noTimeCheck.addEventListener("change", () => {
+      if (noTimeCheck.checked) {
+        birthTimeSelect.value = "";
+        birthTimeSelect.disabled = true;
+      } else {
+        birthTimeSelect.disabled = false;
+      }
+    });
+
+    // 메인 버튼: 운세 보기
+    seeFortuneBtn.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      const gender = genderSelect.value;
+      const birth = birthInput.value;
+      const birthTime = birthTimeSelect.disabled ? "" : birthTimeSelect.value;
+
       if (!birth) {
-        errorDiv.textContent = "생년월일은 반드시 입력할 것.";
+        errorDiv.textContent = "생년월일은 반드시 입력해 주세요.";
         return;
       }
       if (!gender) {
-        errorDiv.textContent = "성별을 선택할 것.";
+        errorDiv.textContent = "성별을 선택해 주세요.";
         return;
       }
       errorDiv.textContent = "";
 
       const seed = makeSeed(birth, gender, birthTime);
-      const index = seed % fortunes.length;
-      const baseFortune = fortunes[index];
+      const idx = seed % fortunes.length;
+      const fortune = fortunes[idx];
 
-      // 점수: 60~100
+      // 점수 60~100, 행운 숫자 1~10
       const score = 60 + (seed % 41);
-      // 행운의 숫자: 1~10
       const luckyNumber = (seed % 10) + 1;
-      // 색상 선택
       const color = colors[seed % colors.length];
 
-      // 이름 문구
-      const namePrefix = name ? `${name}님, ` : "";
+      const namePrefix = name ? name + "님, " : "";
 
-      // 화면 반영
-      document.getElementById("resultTitle").textContent =
-        namePrefix + baseFortune.title;
+      todayText.textContent = formatTodayKorean();
+      resultTitle.textContent = namePrefix + fortune.headline;
+      resultIntro.textContent = fortune.intro;
+      scoreBadge.textContent = score + "점";
+      luckyBadge.textContent = luckyNumber;
+      colorBadge.textContent = color;
 
-      document.getElementById("resultMeta").textContent =
-        `입력한 정보 기준으로 계산된 오늘의 흐름임. (${birth} 기준)`;
+      // 섹션 렌더링
+      sectionContainer.innerHTML = "";
+      fortune.sections.forEach(sec => {
+        const div = document.createElement("div");
+        div.className = "section";
+        div.innerHTML =
+          '<div class="section-title">' +
+          sec.title +
+          "</div><div class=\"section-body\">" +
+          sec.body +
+          "</div>";
+        sectionContainer.appendChild(div);
+      });
 
-      document.getElementById("scoreBadge").textContent = `오늘의 점수: ${score}점`;
-      document.getElementById("colorBadge").textContent = `추천 색상: ${color}`;
-      document.getElementById("luckyBadge").textContent = `행운의 숫자: ${luckyNumber}`;
-
-      document.getElementById("resultLines").textContent =
-        baseFortune.lines.join("\n");
-
-      document.getElementById("resultCard").style.display = "block";
+      resultSection.style.display = "block";
+      // 결과 카드로 스크롤
+      resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+    // 초기 날짜 세팅
+    todayText.textContent = formatTodayKorean();
   </script>
 </body>
 </html>
