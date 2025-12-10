@@ -16,7 +16,9 @@
       --accent: #00bf6f;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -60,6 +62,9 @@
       line-height: 1.4;
       margin-bottom: 16px;
     }
+    .hero-title span {
+      font-weight: 800;
+    }
     .clover {
       font-size: 80px;
       line-height: 1;
@@ -67,7 +72,7 @@
     }
     .hero-sub {
       font-size: 0.9rem;
-      color: #333;
+      color: #333333;
     }
 
     /* ===== 카드 공통 ===== */
@@ -79,371 +84,671 @@
       margin-bottom: 18px;
     }
 
-    /* 입력 스타일 */
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+      color: #666666;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
     input, select {
       width: 100%;
       padding: 10px 12px;
       border-radius: 12px;
-      border: 1px solid #ddd;
-      background: #fafafa;
+      border: 1px solid #dddddd;
       font-size: 0.9rem;
+      outline: none;
+      background: #fafafa;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+    }
+    input::placeholder {
+      color: #aaaaaa;
+    }
+
+    /* 생년월일 3분할 */
+    .birth-row {
+      display: flex;
+      gap: 8px;
+    }
+    .birth-row select {
+      flex: 1;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .error {
+      font-size: 0.8rem;
+      color: #e53935;
+      min-height: 1.2em;
+      margin-top: 4px;
     }
 
     /* ===== 결과 카드 ===== */
-    .result { display: none; margin-top: 8px; }
+    .result {
+      margin-top: 8px;
+      display: none;
+    }
+
     .result-card {
-      background: #fff;
+      background: var(--card-bg);
       border-radius: 18px;
       padding: 18px 16px 20px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.12);
       margin-bottom: 16px;
     }
 
+    .date-text {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .result-headline {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .result-intro {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
     .badge-row {
       display: flex;
       gap: 8px;
-      margin-top: 14px;
+      margin-bottom: 12px;
     }
     .badge {
       flex: 1;
-      background: var(--badge-bg);
-      border-radius: 12px;
       padding: 8px 10px;
+      border-radius: 12px;
+      background: var(--badge-bg);
+      font-size: 0.8rem;
       text-align: center;
-      font-size: 0.85rem;
     }
-    .badge-value { font-size: 1rem; font-weight: 700; }
+    .badge-title {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text-sub);
+    }
+    .badge-value {
+      font-weight: 700;
+      line-height: 1.3;
+    }
 
-    /* 세부 블록 */
     .section {
-      background: #fff;
+      background: var(--card-bg);
       border-radius: 18px;
-      padding: 14px;
+      padding: 14px 14px 12px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.06);
       margin-bottom: 10px;
       font-size: 0.9rem;
       line-height: 1.5;
     }
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+    }
+    .section-body {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
 
-    /* 하단 버튼 */
+    .disclaimer {
+      font-size: 0.75rem;
+      color: #444444;
+      text-align: center;
+      margin-top: 8px;
+      opacity: 0.8;
+    }
+
+    /* ===== 하단 고정 버튼 ===== */
     .bottom-bar {
       position: fixed;
-      left: 0; right: 0; bottom: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       padding: 10px 16px 18px;
       background: linear-gradient(to top, rgba(0,0,0,0.28), transparent);
       pointer-events: none;
     }
-    .bottom-inner { max-width: 480px; margin: 0 auto; pointer-events: auto; }
+    .bottom-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      pointer-events: auto;
+    }
     .main-btn {
       width: 100%;
-      background: #000;
-      color: #fff;
-      padding: 14px;
-      font-size: 1rem;
-      border-radius: 999px;
       border: none;
+      border-radius: 999px;
+      padding: 14px 16px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
+    }
+    .main-btn:active {
+      transform: translateY(1px);
+      opacity: 0.9;
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
-
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <!-- 헤더 -->
+    <header class="top-bar">
+      <div class="brand">IfNewWorld</div>
+    </header>
 
-  <!-- 헤더 -->
-  <header class="top-bar">
-    <div class="brand">IfNewWorld</div>
-  </header>
+    <!-- 히어로 / 인사 -->
+    <section class="hero">
+      <div class="hero-title">
+        <span id="heroNamePrefix"></span>오늘도 행운이 가득하길!
+      </div>
+      <div class="clover">🍀</div>
+      <div class="hero-sub">간단한 정보를 입력하면 오늘 하루의 운세와 작은 조언을 알려줍니다.</div>
+    </section>
 
-  <!-- 히어로 -->
-  <section class="hero">
-    <div class="hero-title"><span id="heroNamePrefix"></span>오늘도 행운이 가득하길!</div>
-    <div class="clover">🍀</div>
-    <div class="hero-sub">간단한 정보를 입력하면 오늘의 운세를 알려드립니다.</div>
-  </section>
+    <!-- 입력 카드 -->
+    <section class="card">
+      <div class="card-title">정확한 운세를 위해<br><span id="formNamePrefix">당신</span>을 더 알고 싶어요</div>
+      <div class="card-desc">
+        성별, 생년월일, 태어난 시간을 기반으로 오늘의 흐름을 간단히 분석합니다.
+        입력한 정보는 운세 계산 용도로만 사용됩니다.
+      </div>
 
-  <!-- 입력 카드 -->
-  <section class="card">
-    <label>이름</label>
-    <input id="name" placeholder="예: 지혜빈" />
+      <div class="field">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="예: 지혜빈" />
+      </div>
 
-    <label style="margin-top:10px;">성별</label>
-    <select id="gender">
-      <option value="">선택하세요</option>
-      <option value="male">남성</option>
-      <option value="female">여성</option>
-      <option value="other">기타</option>
-    </select>
+      <div class="field">
+        <label for="gender">성별</label>
+        <select id="gender">
+          <option value="">선택하세요</option>
+          <option value="male">남성</option>
+          <option value="female">여성</option>
+          <option value="other">기타</option>
+        </select>
+      </div>
 
-    <label style="margin-top:10px;">생년월일</label>
-    <div style="display:flex; gap:8px;">
-      <select id="birthYear"><option value="">연도</option></select>
-      <select id="birthMonth"><option value="">월</option></select>
-      <select id="birthDay"><option value="">일</option></select>
-    </div>
-
-    <label style="margin-top:10px;">태어난 시간</label>
-    <select id="birthTime">
-      <option value="">모름 / 기억 안 남</option>
-      <option value="0">00시</option><option value="1">01시</option>
-      <option value="2">02시</option><option value="3">03시</option>
-      <option value="4">04시</option><option value="5">05시</option>
-      <option value="6">06시</option><option value="7">07시</option>
-      <option value="8">08시</option><option value="9">09시</option>
-      <option value="10">10시</option><option value="11">11시</option>
-      <option value="12">12시</option><option value="13">13시</option>
-      <option value="14">14시</option><option value="15">15시</option>
-      <option value="16">16시</option><option value="17">17시</option>
-      <option value="18">18시</option><option value="19">19시</option>
-      <option value="20">20시</option><option value="21">21시</option>
-      <option value="22">22시</option><option value="23">23시</option>
-    </select>
-
-    <div id="error" style="color:#e53935; font-size:0.8rem; margin-top:6px;"></div>
-  </section>
-
-  <!-- 결과 영역 -->
-  <section class="result" id="resultSection">
-
-    <div class="result-card">
-      <div id="todayText" style="font-size:0.83rem; color:#555; margin-bottom:6px;"></div>
-      <div id="resultTitle" style="font-size:1.1rem; font-weight:700; margin-bottom:10px;"></div>
-      <div id="resultIntro" style="color:#555; margin-bottom:14px; line-height:1.5;"></div>
-
-      <div class="badge-row">
-        <div class="badge">
-          <span class="badge-title">오늘의 점수</span>
-          <span class="badge-value" id="scoreBadge"></span>
-        </div>
-        <div class="badge">
-          <span class="badge-title">행운의 숫자</span>
-          <span class="badge-value" id="luckyBadge"></span>
-        </div>
-        <div class="badge">
-          <span class="badge-title">추천 색상</span>
-          <span class="badge-value" id="colorBadge"></span>
+      <!-- 생년월일: 연/월/일 셀렉트 -->
+      <div class="field">
+        <label>생년월일</label>
+        <div class="birth-row">
+          <select id="birthYear">
+            <option value="">연도</option>
+          </select>
+          <select id="birthMonth">
+            <option value="">월</option>
+          </select>
+          <select id="birthDay">
+            <option value="">일</option>
+          </select>
         </div>
       </div>
-    </div>
 
-    <div id="sectionContainer"></div>
+      <div class="field">
+        <label for="birthTime">태어난 시간</label>
+        <select id="birthTime">
+          <option value="">모름 / 기억 안 남</option>
+          <option value="0">00시</option>
+          <option value="1">01시</option>
+          <option value="2">02시</option>
+          <option value="3">03시</option>
+          <option value="4">04시</option>
+          <option value="5">05시</option>
+          <option value="6">06시</option>
+          <option value="7">07시</option>
+          <option value="8">08시</option>
+          <option value="9">09시</option>
+          <option value="10">10시</option>
+          <option value="11">11시</option>
+          <option value="12">12시</option>
+          <option value="13">13시</option>
+          <option value="14">14시</option>
+          <option value="15">15시</option>
+          <option value="16">16시</option>
+          <option value="17">17시</option>
+          <option value="18">18시</option>
+          <option value="19">19시</option>
+          <option value="20">20시</option>
+          <option value="21">21시</option>
+          <option value="22">22시</option>
+          <option value="23">23시</option>
+        </select>
+      </div>
 
-    <div style="text-align:center; font-size:0.75rem; color:#444; opacity:0.8; margin-top:10px;">
-      본 운세는 오락 및 자기 성찰 참고용입니다.
-    </div>
-  </section>
-</div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="noTime" />
+        <label for="noTime">태어난 시간을 잘 모르겠어요</label>
+      </div>
 
-<!-- 하단 버튼 -->
-<div class="bottom-bar">
-  <div class="bottom-inner">
-    <button class="main-btn" id="seeFortuneBtn">오늘의 운세 보기</button>
+      <div id="error" class="error"></div>
+    </section>
+
+    <!-- 결과 영역 -->
+    <section class="result" id="resultSection">
+      <div class="result-card">
+        <div class="date-text" id="todayText"></div>
+        <div class="result-headline" id="resultTitle"></div>
+        <div class="result-intro" id="resultIntro"></div>
+
+        <div class="badge-row">
+          <div class="badge">
+            <span class="badge-title">오늘의 점수</span>
+            <span class="badge-value" id="scoreBadge"></span>
+          </div>
+          <div class="badge">
+            <span class="badge-title">행운의 숫자</span>
+            <span class="badge-value" id="luckyBadge"></span>
+          </div>
+          <div class="badge">
+            <span class="badge-title">추천 색상</span>
+            <span class="badge-value" id="colorBadge"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 세부 조언 블록 -->
+      <div id="sectionContainer"></div>
+
+      <div class="disclaimer">
+        본 운세는 오락 및 자기 성찰을 위한 참고용이며,
+        실제 투자·의사결정의 근거로 사용하지 않기를 권장함.
+      </div>
+    </section>
   </div>
-</div>
 
-<script>
-/* ================================================
-   날짜 포맷
-================================================= */
-function formatToday() {
-  const w = ["일","월","화","수","목","금","토"];
-  const n = new Date();
-  return `${n.getFullYear()}년 ${n.getMonth()+1}월 ${n.getDate()}일 ${w[n.getDay()]}요일`;
-}
+  <!-- 하단 고정 버튼 -->
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <button class="main-btn" id="seeFortuneBtn">오늘의 운세 보기</button>
+    </div>
+  </div>
 
-/* ================================================
-   운세 문장 데이터 (30종 → 조합 방식)
-================================================= */
+  <script>
+    /* ===== 날짜 표기 ===== */
+    function formatTodayKorean() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const date = now.getDate();
+      const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+      const day = weekdays[now.getDay()];
+      return year + "년 " + month + "월 " + date + "일 " + day + "요일";
+    }
 
-/* 메인 메시지 + 레벨 */
-const mainMessages = [
-  ["오늘은 생각보다 일들이 매끄럽게 풀리는 흐름입니다.", 2],
-  ["마음이 가벼워지고 새로운 영감이 떠오르기 쉬운 날입니다.", 2],
-  ["주변의 기대보다 스스로의 힘이 더 크게 발휘되는 시점입니다.", 2],
-  ["집중력이 상승하며 성과를 내기 좋은 날입니다.", 2],
-  ["감정의 균형이 잘 잡혀 차분하게 상황을 판단할 수 있습니다.", 1],
-  ["예상치 못한 기회가 자연스럽게 다가올 수 있는 날입니다.", 1],
-  ["관계 운이 좋아 소통에서 좋은 결과를 기대할 수 있습니다.", 1],
-  ["평소보다 행동력이 높아지는 날입니다.", 1],
-  ["책임감이 부각되며 신뢰를 받기 좋은 운입니다.", 2],
-  ["작은 시도만으로도 큰 결과로 이어질 수 있는 날입니다.", 2],
-];
+    /* ===== 시드 생성 (항상 같은 입력 → 같은 결과) ===== */
+    function makeSeed(birthStr, gender, birthTime) {
+      const digits = birthStr.replace(/-/g, "");
+      let sum = 0;
+      for (let ch of digits) sum += Number(ch);
 
-/* 행동 조언 */
-const actionTips = [
-  "오늘은 해야 할 일을 우선순위로 정리하고 빠르게 실행해 보세요.",
-  "작은 일부터 처리하면 전체 흐름이 좋아집니다.",
-  "새로운 결정을 내리기 좋은 타이밍입니다.",
-  "과감하게 의견을 표현해보면 호응이 좋습니다.",
-  "정리·정돈만 해도 집중력이 살아납니다.",
-  "짧은 휴식이 컨디션을 지켜줍니다.",
-  "협업 운이 좋아 도움을 얻기 좋습니다.",
-  "가벼운 운동이 에너지 순환에 도움이 됩니다.",
-  "새로운 정보를 배우기 좋은 날입니다.",
-  "오늘 시작하는 습관이 장기적으로 이득이 됩니다."
-];
+      let genderVal = 0;
+      if (gender === "male") genderVal = 3;
+      else if (gender === "female") genderVal = 7;
+      else if (gender === "other") genderVal = 5;
 
-/* 주의 문장 */
-const warnings = [
-  "다만 너무 많은 일을 한 번에 처리하려 하지 마세요.",
-  "속도를 지나치게 올리면 실수가 생길 수 있습니다.",
-  "주변 의견에 과하게 흔들리지 않도록 중심을 잡으세요.",
-  "말투에 예민해질 수 있으니 차분하게 대화하세요.",
-  "오늘은 과한 지출은 피하는 게 좋습니다.",
-  "비교심이 생기기 쉬운 날이니 자신의 페이스에 집중하세요.",
-  "완벽주의는 진행을 늦출 수 있습니다.",
-  "즉흥적 결정은 한 번 더 점검하는 것이 좋습니다.",
-  "작은 실수에도 관대함이 필요합니다.",
-  "큰 목표보다 지금 가능한 일부터 진행하세요."
-];
+      const timeVal = birthTime !== "" ? Number(birthTime) : 0;
+      return sum * 13 + genderVal * 17 + timeVal * 19;
+    }
 
-/* 추천 색상 */
-const colors = [
-  "차분한 베이지", "포레스트 그린", "라이트 퍼플",
-  "아이보리", "선셋 오렌지", "스카이 블루",
-  "머스타드 옐로", "코랄 핑크"
-];
+    /* ===== 색상 이름 줄바꿈: 띄어쓰기 기준 우선 ===== */
+    function formatColorLabel(name) {
+      if (name.includes(" ")) {
+        const parts = name.split(" ");
+        const last = parts.pop();
+        return parts.join(" ") + "<br>" + last;
+      }
+      const len = name.length;
+      if (len <= 4) return name;
+      const first = name.slice(0, len - 2);
+      const last = name.slice(len - 2);
+      return first + "<br>" + last;
+    }
 
-/* ================================================
-   색상 줄바꿈: 띄어쓰기 있으면 마지막 단어 아래 줄
-================================================= */
-function formatColorLabel(name) {
-  if (name.includes(" ")) {
-    const parts = name.split(" ");
-    const last = parts.pop();
-    return parts.join(" ") + "<br>" + last;
-  }
-  return name.length > 4
-    ? name.slice(0, -2) + "<br>" + name.slice(-2)
-    : name;
-}
+    /* ===== 운세 메시지 데이터 ===== */
 
-/* ================================================
-   점수 계산: 메시지 톤 + 경고 강도 기반
-================================================= */
-function calcScore(level, warnIdx) {
-  let min, max;
+    // 메인 헤드라인 후보 (톤: high / mid / calm)
+    const headlineOptions = [
+      { tone: "high", text: "집중력과 실행력이 살아나는 하루입니다." },
+      { tone: "high", text: "지금까지 쌓아온 노력이 눈에 보이기 시작하는 날입니다." },
+      { tone: "high", text: "과감한 선택이 좋은 결과로 이어지기 쉬운 하루입니다." },
 
-  if (level === 2) { min = 82; max = 97; }
-  else if (level === 1) { min = 72; max = 90; }
-  else { min = 62; max = 82; }
+      { tone: "mid", text: "해야 할 일들의 윤곽이 비교적 또렷하게 보이는 날입니다." },
+      { tone: "mid", text: "새로운 시도와 안정적인 일상이 균형을 이루는 하루입니다." },
+      { tone: "mid", text: "큰 파동은 없지만, 차분히 성과를 쌓기 좋은 흐름입니다." },
 
-  const penalty = (warnIdx % 3) * 2;
-  const raw = Math.floor(Math.random() * (max - min + 1)) + min - penalty;
+      { tone: "calm", text: "마음의 리듬을 정리하기 좋은 정돈의 하루입니다." },
+      { tone: "calm", text: "속도를 잠시 늦추고 나를 정비하기 좋은 타이밍입니다." },
+      { tone: "calm", text: "무리하기보다는 흐름을 점검하며 가는 편이 좋은 날입니다." }
+    ];
 
-  return Math.max(60, Math.min(raw, 99));
-}
+    // 인트로 문단 (톤별)
+    const introByTone = {
+      high: [
+        "계획만 세우고 미뤄두었던 일을 실제 행동으로 옮기기에 좋은 타이밍입니다. 머릿속에서만 돌던 생각들을 현실로 꺼내 놓으면, 생각보다 빠르게 진전이 일어날 수 있습니다.",
+        "에너지가 비교적 또렷하게 살아나는 날입니다. 중요한 결정을 하거나 도전적인 일을 시작하기에 유리한 흐름이니, 오늘 떠오르는 아이디어를 가볍게라도 실험해 보세요.",
+        "주변의 기대보다 스스로의 추진력이 더 크게 작용하는 하루입니다. 스스로를 믿고 한 걸음을 내딛는 것만으로도 좋은 변화를 만들 수 있습니다."
+      ],
+      mid: [
+        "급격한 변화보다는 안정적인 진행에 어울리는 날입니다. 이미 진행 중인 일들을 정리하고 마무리하는 데 집중하면 부담이 눈에 띄게 줄어들 수 있습니다.",
+        "해야 할 일과 쉬어야 할 타이밍의 경계가 비교적 또렷하게 보이는 하루입니다. 무리해서 속도를 끌어올리기보다, 오늘은 흐름을 타는 쪽이 더 효율적입니다.",
+        "어느 한쪽으로 치우치기보다는 균형 잡힌 선택이 필요한 날입니다. 너무 극단적인 판단보다는, 지금 당장 실천 가능한 선택지를 우선으로 두는 것이 좋습니다."
+      ],
+      calm: [
+        "감정의 파도가 크지는 않지만, 사소한 피로감이 쌓여 있을 수 있는 날입니다. 억지로 텐션을 끌어올리기보다 오늘은 나를 다독이는 데 초점을 맞추는 편이 좋습니다.",
+        "기존 계획을 재정비하고, 앞으로 어떻게 움직일지 중장기적으로 그려보기 좋은 하루입니다. 오늘 떠올린 생각이 내일 이후의 방향성을 바꾸는 힌트가 될 수 있습니다.",
+        "당장 성과에 집착하기보다는, 틀을 정리하고 리듬을 만드는 데 집중하면 좋습니다. 오늘의 작은 점검이 다음 주의 부담을 많이 덜어 줄 수 있습니다."
+      ]
+    };
 
-/* ================================================
-   행운의 숫자: 점수가 높을수록 큰 숫자
-================================================= */
-function calcLucky(score) {
-  if (score >= 90) return Math.floor(Math.random()*3)+8;   // 8~10
-  if (score >= 80) return Math.floor(Math.random()*4)+6;   // 6~9
-  if (score >= 70) return Math.floor(Math.random()*5)+4;   // 4~8
-  return Math.floor(Math.random()*6)+1;                    // 1~6
-}
+    // 세부 섹션 후보 (제목 + 내용) — 15줄 이상 나오도록 충분히 길게 구성
+    const sectionPool = [
+      {
+        title: "우선순위 정하기",
+        body:
+          "오늘은 모든 일을 한 번에 해결하려 하기보다, 가장 중요한 일 한두 가지에 에너지를 집중하는 편이 좋습니다. 할 일 목록을 적어보고 ‘지금 반드시 해야 하는 것’부터 체크해 보세요. 작은 항목이라도 하나씩 지워 나가면 심리적인 부담이 눈에 띄게 가벼워질 수 있습니다."
+      },
+      {
+        title: "몰입 팁",
+        body:
+          "25분 집중 후 5분 쉬는 식으로 짧게 끊어서 일하면 효율이 높아집니다. 휴대폰 알림을 잠시 꺼두거나, 작업에 필요 없는 탭을 정리하는 것만으로도 몰입도가 달라질 수 있습니다. 물 한 잔을 곁에 두고 호흡을 천천히 고르며 시작해 보세요."
+      },
+      {
+        title: "관계 & 소통",
+        body:
+          "오늘은 말투와 표현 방식에 조금만 더 신경을 쓰면 좋습니다. 같은 내용이라도 부드럽게 전달하면 불필요한 오해를 줄일 수 있습니다. 즉각적인 답변보다는, 한숨 고르고 다시 읽어본 뒤 보내는 메시지가 관계 운을 더 좋게 만들어 줄 수 있습니다."
+      },
+      {
+        title: "컨디션 관리",
+        body:
+          "몸과 마음의 에너지가 다소 엇갈릴 수 있는 날입니다. 피곤함이 느껴진다면, 무리해서 버티기보다 짧은 스트레칭이나 가벼운 산책으로 흐름을 바꿔 보세요. 수면 리듬이 흐트러져 있다면 오늘만큼은 잠드는 시간을 조금 앞당기는 것도 좋습니다."
+      },
+      {
+        title: "금전 & 소비운",
+        body:
+          "즉흥적인 지출보다는 꼭 필요한 곳에 사용했을 때 만족도가 높아지는 날입니다. 당장 필요하지 않은 물건은 ‘장바구니에 넣어두고 내일 다시 보기’ 전략이 도움이 됩니다. 대신 나의 성장이나 건강을 위한 투자에는 적당한 비용을 써도 괜찮은 흐름입니다."
+      },
+      {
+        title: "일·학업 운",
+        body:
+          "디테일을 잡는 데 유리한 하루입니다. 남들이 지나칠 만한 부분에서 장점을 발견하거나 오류를 찾아낼 수 있습니다. 완벽주의에 빠지지 않는 선에서, 중요한 문서나 결과물을 한 번 더 검토해 보면 좋은 평가를 받을 확률이 높습니다."
+      },
+      {
+        title: "아이디어 & 영감",
+        body:
+          "일상의 작은 장면에서 새로운 아이디어가 떠오르기 좋은 날입니다. 평소 자주 보던 공간도 다른 시선으로 바라보면 새로운 기획의 실마리가 보일 수 있습니다. 떠오른 생각을 메모해 두면 나중에 프로젝트나 콘텐츠로 연결될 가능성이 큽니다."
+      },
+      {
+        title: "감정 다루기",
+        body:
+          "괜찮다고 넘겼던 감정이 오늘 문득 떠오를 수 있습니다. 이를 억지로 눌러두기보다, ‘아 그때 이런 기분이었지’ 하고 인정해 주는 것만으로도 마음이 한결 가벼워질 수 있습니다. 필요한 경우 믿을 수 있는 사람에게 가볍게 털어놓는 것도 도움이 됩니다."
+      },
+      {
+        title: "오늘의 한 줄 가이드",
+        body:
+          "완벽을 목표로 하기보다, 오늘 할 수 있는 만큼만 성실하게 해내면 충분합니다. 70%의 완성도라도 마무리된 일 하나가, 머릿속을 복잡하게 만들던 여러 걱정을 한 번에 정리해 줄 수 있습니다."
+      },
+      {
+        title: "셀프 케어 포인트",
+        body:
+          "오늘 하루 수고한 나를 위해 작은 선물을 준비해 보세요. 좋아하는 음식 한 가지, 따뜻한 차 한 잔, 짧은 산책, 좋아하는 영상 한 편이라도 좋습니다. ‘이 정도면 오늘도 잘 살았다’라는 마음이 들 수 있도록 나 자신에게 친절하게 대하는 것이 중요합니다."
+      }
+    ];
 
-/* ================================================
-   운세 전체 생성 함수
-================================================= */
-function generateFortune(name) {
-  const mainIdx = Math.floor(Math.random() * mainMessages.length);
-  const actionIdx = Math.floor(Math.random() * actionTips.length);
-  const warnIdx = Math.floor(Math.random() * warnings.length);
+    // 추천 색상 후보
+    const colorOptions = [
+      "차분한 베이지",
+      "포레스트 그린",
+      "라임 그린",
+      "아이보리 화이트",
+      "샌드 베이지",
+      "브릭 오렌지",
+      "스모크 블루"
+    ];
 
-  const [mainText, level] = mainMessages[mainIdx];
-  const score = calcScore(level, warnIdx);
-  const lucky = calcLucky(score);
-  const color = colors[Math.floor(Math.random() * colors.length)];
+    /* ===== 점수 계산: 톤에 맞게 범위 조정 ===== */
+    function calcScore(tone, seed) {
+      let min, max;
+      if (tone === "high") {
+        min = 82; max = 97;
+      } else if (tone === "mid") {
+        min = 72; max = 90;
+      } else {
+        min = 64; max = 84;
+      }
+      const range = max - min + 1;
+      return min + (seed % range);
+    }
 
-  return {
-    title: `${name ? name + "님, " : ""}${mainText}`,
-    intro: actionTips[actionIdx] + " " + warnings[warnIdx],
-    score,
-    lucky,
-    color
-  };
-}
+    /* ===== 행운의 숫자: 점수와 연동 ===== */
+    function calcLucky(score, seed) {
+      if (score >= 90) {
+        return 8 + (seed % 3);      // 8~10
+      } else if (score >= 80) {
+        return 6 + (seed % 4);      // 6~9
+      } else if (score >= 70) {
+        return 4 + (seed % 5);      // 4~8
+      } else {
+        return 1 + (seed % 6);      // 1~6
+      }
+    }
 
-/* ================================================
-   DOM 연결
-================================================= */
-const nameInput = document.getElementById("name");
-const gender = document.getElementById("gender");
-const birthYear = document.getElementById("birthYear");
-const birthMonth = document.getElementById("birthMonth");
-const birthDay = document.getElementById("birthDay");
-const birthTime = document.getElementById("birthTime");
+    /* ===== 시드 기반 선택 함수 (같은 입력 → 항상 같은 조합) ===== */
+    function pickFrom(arr, seedOffset) {
+      const idx = seedOffset % arr.length;
+      return arr[idx];
+    }
 
-const errorDiv = document.getElementById("error");
-const heroNamePrefix = document.getElementById("heroNamePrefix");
+    /* ===== 전체 운세 생성 ===== */
+    function generateFortune(seed, name) {
+      // 톤 결정
+      const toneSeed = seed % 100;
+      let tone = "mid";
+      if (toneSeed >= 70) tone = "high";
+      else if (toneSeed < 40) tone = "calm";
 
-const resultSection = document.getElementById("resultSection");
-const todayText = document.getElementById("todayText");
-const resultTitle = document.getElementById("resultTitle");
-const resultIntro = document.getElementById("resultIntro");
-const scoreBadge = document.getElementById("scoreBadge");
-const luckyBadge = document.getElementById("luckyBadge");
-const colorBadge = document.getElementById("colorBadge");
-const sectionContainer = document.getElementById("sectionContainer");
+      // 헤드라인 & 인트로
+      const toneHeadlines = headlineOptions.filter(h => h.tone === tone);
+      const headlineObj = pickFrom(toneHeadlines, seed);
+      const introArr = introByTone[tone];
+      const introText = pickFrom(introArr, Math.floor(seed / 7));
 
-/* ================================================
-   이름 UI 업데이트
-================================================= */
-nameInput.addEventListener("input", () => {
-  heroNamePrefix.textContent = nameInput.value.trim()
-    ? `${nameInput.value.trim()}님, `
-    : "";
-});
+      // 점수/행운/색상
+      const score = calcScore(tone, seed);
+      const lucky = calcLucky(score, Math.floor(seed / 11));
+      const colorName = pickFrom(colorOptions, Math.floor(seed / 13));
 
-/* ================================================
-   생년월일 옵션 자동 생성
-================================================= */
-(function initBirthSelects() {
-  const now = new Date();
-  const thisYear = now.getFullYear();
-  for (let y = thisYear; y >= thisYear - 60; y--) {
-    birthYear.innerHTML += `<option value="${y}">${y}년</option>`;
-  }
-  for (let m = 1; m <= 12; m++) {
-    birthMonth.innerHTML += `<option value="${m}">${m}월</option>`;
-  }
-  for (let d = 1; d <= 31; d++) {
-    birthDay.innerHTML += `<option value="${d}">${d}일</option>`;
-  }
-})();
+      // 섹션 3~4개 선택
+      const sections = [];
+      const sectionCount = 3 + (seed % 2); // 3 또는 4
+      const usedIndex = new Set();
+      for (let i = 0; i < sectionCount; i++) {
+        let tryIdx = (seed + i * 17) % sectionPool.length;
+        // 중복 방지
+        while (usedIndex.has(tryIdx)) {
+          tryIdx = (tryIdx + 1) % sectionPool.length;
+        }
+        usedIndex.add(tryIdx);
+        sections.push(sectionPool[tryIdx]);
+      }
 
-/* ================================================
-   버튼 클릭 → 운세 생성
-================================================= */
-document.getElementById("seeFortuneBtn").addEventListener("click", () => {
+      const namePrefix = name ? name + "님, " : "";
 
-  if (!birthYear.value || !birthMonth.value || !birthDay.value) {
-    errorDiv.textContent = "생년월일을 모두 선택해주세요.";
-    return;
-  }
-  if (!gender.value) {
-    errorDiv.textContent = "성별을 선택해주세요.";
-    return;
-  }
-  errorDiv.textContent = "";
+      return {
+        headline: namePrefix + headlineObj.text,
+        intro: introText,
+        score,
+        lucky,
+        colorName,
+        sections
+      };
+    }
 
-  const name = nameInput.value.trim();
+    /* ===== DOM 요소 ===== */
+    const nameInput = document.getElementById("name");
+    const genderSelect = document.getElementById("gender");
+    const birthYearSelect = document.getElementById("birthYear");
+    const birthMonthSelect = document.getElementById("birthMonth");
+    const birthDaySelect = document.getElementById("birthDay");
+    const birthTimeSelect = document.getElementById("birthTime");
+    const noTimeCheck = document.getElementById("noTime");
+    const errorDiv = document.getElementById("error");
+    const heroNamePrefix = document.getElementById("heroNamePrefix");
+    const formNamePrefix = document.getElementById("formNamePrefix");
+    const seeFortuneBtn = document.getElementById("seeFortuneBtn");
+    const resultSection = document.getElementById("resultSection");
+    const todayText = document.getElementById("todayText");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultIntro = document.getElementById("resultIntro");
+    const scoreBadge = document.getElementById("scoreBadge");
+    const luckyBadge = document.getElementById("luckyBadge");
+    const colorBadge = document.getElementById("colorBadge");
+    const sectionContainer = document.getElementById("sectionContainer");
 
-  const fortune = generateFortune(name);
+    /* ===== 이름 입력 시 상단 문구 업데이트 ===== */
+    function updateNameUI() {
+      const name = nameInput.value.trim();
+      if (name) {
+        heroNamePrefix.textContent = name + "님, ";
+        formNamePrefix.textContent = name + "님";
+      } else {
+        heroNamePrefix.textContent = "";
+        formNamePrefix.textContent = "당신";
+      }
+    }
+    nameInput.addEventListener("input", updateNameUI);
 
-  todayText.textContent = formatToday();
-  resultTitle.textContent = fortune.title;
-  resultIntro.textContent = fortune.intro;
-  scoreBadge.textContent = fortune.score + "점";
-  luckyBadge.textContent = fortune.lucky;
-  colorBadge.innerHTML = formatColorLabel(fortune.color);
+    /* ===== 태어난 시간 체크박스 처리 ===== */
+    noTimeCheck.addEventListener("change", () => {
+      if (noTimeCheck.checked) {
+        birthTimeSelect.value = "";
+        birthTimeSelect.disabled = true;
+      } else {
+        birthTimeSelect.disabled = false;
+      }
+    });
 
-  resultSection.style.display = "block";
-  resultSection.scrollIntoView({ behavior: "smooth", block:"start" });
-});
-</script>
+    /* ===== 생년월일 셀렉트 옵션 생성 ===== */
+    function initBirthSelects() {
+      const now = new Date();
+      const thisYear = now.getFullYear();
+      const startYear = thisYear - 60;
 
+      for (let y = thisYear; y >= startYear; y--) {
+        const opt = document.createElement("option");
+        opt.value = String(y);
+        opt.textContent = y + "년";
+        birthYearSelect.appendChild(opt);
+      }
+
+      for (let m = 1; m <= 12; m++) {
+        const opt = document.createElement("option");
+        opt.value = String(m);
+        opt.textContent = m + "월";
+        birthMonthSelect.appendChild(opt);
+      }
+
+      for (let d = 1; d <= 31; d++) {
+        const opt = document.createElement("option");
+        opt.value = String(d);
+        opt.textContent = d + "일";
+        birthDaySelect.appendChild(opt);
+      }
+    }
+
+    /* ===== 메인 버튼: 운세 보기 ===== */
+    seeFortuneBtn.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      const gender = genderSelect.value;
+      const year = birthYearSelect.value;
+      const month = birthMonthSelect.value;
+      const day = birthDaySelect.value;
+      const birthTime = birthTimeSelect.disabled ? "" : birthTimeSelect.value;
+
+      if (!year || !month || !day) {
+        errorDiv.textContent = "생년월일(연/월/일)을 모두 선택해 주세요.";
+        return;
+      }
+      if (!gender) {
+        errorDiv.textContent = "성별을 선택해 주세요.";
+        return;
+      }
+      errorDiv.textContent = "";
+
+      const mm = month.padStart(2, "0");
+      const dd = day.padStart(2, "0");
+      const birthStr = year + "-" + mm + "-" + dd;
+
+      const seed = makeSeed(birthStr, gender, birthTime);
+      const fortune = generateFortune(seed, name);
+
+      todayText.textContent = formatTodayKorean();
+      resultTitle.textContent = fortune.headline;
+      resultIntro.textContent = fortune.intro;
+      scoreBadge.textContent = fortune.score + "점";
+      luckyBadge.textContent = fortune.lucky;
+      colorBadge.innerHTML = formatColorLabel(fortune.colorName);
+
+      // 섹션 렌더링
+      sectionContainer.innerHTML = "";
+      fortune.sections.forEach(sec => {
+        const div = document.createElement("div");
+        div.className = "section";
+        div.innerHTML =
+          '<div class="section-title">' +
+          sec.title +
+          '</div><div class="section-body">' +
+          sec.body +
+          "</div>";
+        sectionContainer.appendChild(div);
+      });
+
+      resultSection.style.display = "block";
+      resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // 초기 설정
+    initBirthSelects();
+    todayText.textContent = formatTodayKorean();
+  </script>
 </body>
 </html>
